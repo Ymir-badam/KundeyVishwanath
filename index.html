@@ -1,293 +1,1194 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Primary Meta Tags -->
-    <title>Kundey Vishwanath</title>
-    <!-- <meta name="title" content="Portfolio Template - Open source" />
-    <meta
-      name="description"
-      content="Build or customize your portfolio website using this super easy template. Free to use if you are a member of the community or a contributor to this project"
-    /> -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Graph Algorithms</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- Open Graph / Facebook -->
-    <!-- <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://github.com/CommunityPro/portfolio-html"
-    />
-    <meta property="og:title" content="Portfolio Template - Open source" />
-    <meta
-      property="og:description"
-      content="Build or customize your portfolio website using this super easy template. Free to use if you are a member of the community or a contributor to this project"
-    />
-    <meta
-      property="og:image"
-      content="https://user-images.githubusercontent.com/62628408/150613011-b78a7f5a-0af1-4312-aab0-0022e7258693.png"
-    /> -->
+        :root {
+            --primary: #00ff88;
+            --secondary: #ff0066;
+            --accent: #00d4ff;
+            --dark: #0a0e27;
+            --darker: #050814;
+            --light: #e8f4f8;
+        }
 
-    <!-- Twitter -->
-    <!-- <meta property="twitter:card" content="summary_large_image" />
-    <meta
-      property="twitter:url"
-      content="https://github.com/CommunityPro/portfolio-html"
-    />
-    <meta property="twitter:title" content="Portfolio Template - Open source" />
-    <meta
-      property="twitter:description"
-      content="Build or customize your portfolio website using this super easy template. Free to use if you are a member of the community or a contributor to this project"
-    />
-    <meta
-      property="twitter:image"
-      content="https://user-images.githubusercontent.com/62628408/150613011-b78a7f5a-0af1-4312-aab0-0022e7258693.png"
-    /> -->
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-    <!-- Link -->
-    <!-- <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="assets/favicon/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/assets/favicon/favicon-16x16.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="assets/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="assets/favicon/android-chrome-192x192.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="512x512"
-      href="assets/favicon/android-chrome-512x512.png"
-    />
-    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico" />
-    <link rel="manifest" href="assets/favicon/site.webmanifest" />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
-      crossorigin="anonymous"
-    /> -->
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/utilities.css" />
-  </head>
-  <body>
-    <header id="hero">
-      <!-- Navbar -->
-      <nav class="navbar">
-        <div class="container">
-          <!-- Logo -->
-          <h1 id="logo">
-            <!-- <a href="https://github.com/CommunityPro/portfolio-html"
-              ><img src="./assets/logo.png" alt="Your Logo"
-            /></a> -->
-          </h1>
-          <!-- Navbar links -->
-          <ul class="nav-menu">
-            <li><a class="nav-link" href="#projects">PROJECTS</a></li>
-            <li><a class="nav-link" href="https://www.linkedin.com/in/kundey-vishwanath-1p618/">CONTACT</a></li>
-            <!-- <li><a class="nav-link" href="#">BlOG</a></li> -->
-            <li>
-              <a
-                class="nav-link btn btn-primary"
-                href="https://drive.google.com/file/d/1rNMSF9t6u0INGQg5pxFRazS4ylvM5GKo/view?usp=sharing"
-                >RESUME <i class="fas fa-arrow-right"></i
-              ></a>
-            </li>
+        #graph-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+        }
 
-            <!-- Toggle switch -->
-            <div class="theme-switch">
-              <input type="checkbox" id="switch" />
-              <label class="toggle-icons" for="switch">
-                <img class="moon" src="assets/moon.svg" />
-                <img class="sun" src="assets/sun.svg" />
-              </label>
-            </div>
-            <!-- Hamburger menu -->
-          </ul>
-          <div class="hamburger">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </div>
-        </div>
-      </nav>
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
 
-      <section class="header-container">
-        <img
-          class="profile-image"
-          src="assets/profile-image.svg"
-          alt=""
-        />
-        <h1>Hi I'm Kundey Vishwanath</h1>
+        header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 4rem 0;
+        }
 
-        <div class="content-text">
-          <h2>Building AI</h2>
-          <h2>Dashboards,Products, Services, and Experience.</h2>
+        h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            line-height: 0.9;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+            background-size: 200% 200%;
+        }
 
-          <p>
-            Analyst, Developer and AI engineer with experience in product development and services.
-          </p>
-        </div>
-        <a
-          href="https://www.linkedin.com/in/kundey-vishwanath-1p618/"
-          class="btn btn-secondary"
-          target="_blank"
-          >Connect With Me</a
-        >
-      </section>
-    </header>
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
 
-    <!-- Projects -->
-    <section id="projects" class="project-container container">
-      <div class="division"></div>
-      <div class="content-text">
-        <h2>Projects</h2>
-        <p>Check out some of my projects</p>
-      </div>
+        .tagline {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--light);
+            opacity: 0.8;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
 
-      <article class="project">
-        <!-- Project 1 -->
-        <div class="card">
-  <div class="project-info">
-    <div class="project-bio">
-      <h3>Image Caption Generator</h3>
-      <p>CNN and RNN</p>
-    </div>
+        .contact-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.45s backwards;
+        }
 
-    <div class="project-link">
-      <a href="https://github.com/Ymir-badam/MajorProject" target="_blank">
-        GitHub <i class="fab fa-github"></i>
-      </a>
-      <a href="https://github.com/Ymir-badam/MajorProject" target="_blank">
-        <i class="fas fa-globe"></i>
-      </a>
-    </div>
-  </div>
-</div>
+        .contact-links a {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
 
+        .contact-links a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
 
-        <!-- Project 2 -->
-        <div href="" class="card">
-          <div class="project-info">
-            <div class="project-bio">
-              <h3>Juritrans Document Translator</h3>
-              <p>Django and AI</p>
-            </div>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
+        }
 
-            <div class="project-link">
-              <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-              <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
-            </div>
-          </div>
-        </div>
+        .controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
 
-        <!-- Porject 3 -->
-        <div href="" class="card">
-          <div class="project-info">
-            <div class="project-bio">
-              <h3>Xintelli Website</h3>
-              <p>HTML, CSS, JS , Bootstrap</p>
-            </div>
+        button {
+            font-family: 'JetBrains Mono', monospace;
+            padding: 1rem 2rem;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+            overflow: hidden;
+        }
 
-            <div class="project-link">
-              <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-              <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
-            </div>
-          </div>
-        </div>
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
 
-        <!-- Project 4 -->
-        <div href="" class="card">
-          <div class="project-info">
-            <div class="project-bio">
-              <h3>CXO level Dashboard</h3>
-              <p>Python Django</p>
-            </div>
+        button:hover::before {
+            left: 0;
+        }
 
-            <div class="project-link">
-              <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-              <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
-            </div>
-          </div>
-        </div>
+        button:hover {
+            color: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
 
-        <!-- Project 5 -->
-        <div href="" class="card">
-          <div class="project-info">
-            <div class="project-bio">
-              <h3>Crypto Tracking Dashboard</h3>
-              <p>Django</p>
-            </div>
+        button.active {
+            background: var(--primary);
+            color: var(--dark);
+        }
 
-            <div class="project-link">
-              <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-              <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
-            </div>
-          </div>
-        </div>
+        section {
+            min-height: 60vh;
+            padding: 6rem 0;
+            animation: fadeInUp 1s ease-out backwards;
+        }
 
-        <!-- Project 6 -->
-        <div href="" class="card">
-          <div class="project-info">
-            <div class="project-bio">
-              <h3>Sentiment Analysis Dashboard Nifty</h3>
-              <p>Django</p>
-            </div>
+        section:nth-child(2) { animation-delay: 0.9s; }
+        section:nth-child(3) { animation-delay: 1.2s; }
 
-            <div class="project-link">
-              <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-              <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
-            </div>
-          </div>
-        </div>
-      </article>
+        h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 2rem;
+            color: var(--accent);
+            font-weight: 800;
+        }
 
-      <a href="https://github.com/Ymir-badam" class="btn btn-secondary"
-        target="_blank" >See More <i class="fas fa-arrow-right"></i
-      ></a>
-    </section>
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
 
-    <footer id="footer">
-      <div class="container">
-        <a href="mailto:vishwanathkundey@gmail.com">vishwanathkundey@gmail.com</a>
-        <!-- Social links -->
-        <div class="social">
-          
-          <a href="https://www.linkedin.com/in/kundey-vishwanath-1p618/" target="_blank"
-            ><img src="./assets/linkedin-icon.svg" alt="Linkedin"
-          /></a>
-          <a href="https://github.com/Ymir-badam" target="_blank"><img src="./assets/github-icon.svg" alt="GitHub" /></a>
-          <a href="#" target="_blank"
-            ><img src="./assets/hashnode-icon.svg" alt="Hashnode"
-          /></a>
-        </div>
-        <!-- Attribution -->
-        <div class="attribution">
-          <a
-            href="https://github.com/Ymir-badam"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+        .project-card {
+            background: rgba(10, 14, 39, 0.6);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
+        }
+
+        .project-card h3 {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-card p {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .about-content {
+            max-width: 800px;
+            font-size: 1.2rem;
+            line-height: 2;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 0, 102, 0.05);
+            border: 1px solid var(--secondary);
+        }
+
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--secondary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+            margin-top: 4rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        .algorithm-info {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(10, 14, 39, 0.9);
+            border: 1px solid var(--primary);
+            padding: 1rem 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .algorithm-info span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 1rem;
+            }
             
-          </a>
-        </div>
-        </div>
-    </footer>
-    <script src="js/script.js"></script>
-  </body>
+            .algorithm-info {
+                bottom: 1rem;
+                right: 1rem;
+                font-size: 0.75rem;
+                padding: 0.8rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="graph-canvas"></canvas>
+    <canvas id="dp-canvas" style="display: none;"></canvas>
+    
+    <div class="algorithm-info">
+        <div>Algorithm: <span id="current-algo">BFS</span></div>
+        <div id="algo-detail"></div>
+        <div>Nodes: <span id="node-count">0</span></div>
+    </div>
+
+    <div class="content">
+        <header>
+            <h1>Kundey Vishwanath</h1>
+            <p class="tagline">AI & Web Developer | Data Scientist | Open Source Contributor</p>
+            <div class="contact-links">
+                <a href="tel:8106793149">📞 8106793149</a>
+                <a href="https://www.linkedin.com/in/kundey-vishwanath" target="_blank">💼 LinkedIn</a>
+                <a href="https://github.com/kundeyvishwanath" target="_blank">💻 GitHub</a>
+            </div>
+            <div class="controls">
+                <button onclick="switchAlgorithm('bfs')" class="active" id="bfs-btn">BFS</button>
+                <button onclick="switchAlgorithm('dfs')" id="dfs-btn">DFS</button>
+                <button onclick="switchAlgorithm('dijkstra')" id="dijkstra-btn">Dijkstra</button>
+                <button onclick="switchAlgorithm('bellmanford')" id="bellmanford-btn">Bellman-Ford</button>
+                <button onclick="switchAlgorithm('floydwarshall')" id="floydwarshall-btn">Floyd-Warshall</button>
+                <button onclick="switchAlgorithm('hierholzer')" id="hierholzer-btn">Hierholzer</button>
+            </div>
+            <div class="controls" style="margin-top: 1rem;">
+                <button onclick="switchAlgorithm('rodcutting')" id="rodcutting-btn">Rod Cutting</button>
+                <button onclick="switchAlgorithm('balloonburst')" id="balloonburst-btn">Balloon Burst</button>
+                <button onclick="switchAlgorithm('lcs')" id="lcs-btn">LCS</button>
+                <button onclick="switchAlgorithm('lis')" id="lis-btn">LIS</button>
+                <button onclick="switchAlgorithm('knapsack')" id="knapsack-btn">Knapsack</button>
+                <button onclick="resetGraph()">Reset</button>
+            </div>
+        </header>
+
+        <section>
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Image Caption Generator</h3>
+                    <p>Developed an AI-powered caption generator using CNN for feature extraction and RNN for sequence generation, trained on Flickr 8k dataset with real-time web interface.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">CNN/RNN</span>
+                        <span class="tech-tag">TensorFlow</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Intelligent Document Analysis Platform</h3>
+                    <p>Revolutionary document comprehension platform using RAG (Retrieval-Augmented Generation) concept with OpenAI API for precise answer extraction.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">OpenAI API</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">RAG</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Data-Driven Insights with LLM</h3>
+                    <p>Integrated Gemini LLM for natural language queries on complex datasets with robust preprocessing pipeline and interactive Flask REST API.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">Gemini LLM</span>
+                        <span class="tech-tag">Pandas</span>
+                        <span class="tech-tag">NumPy</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>GeneCloudOmics</h3>
+                    <p>Powerful gene analysis web application with 3D visualizations using Plotly. Improved API speed by 85% and developed comprehensive UI/backend.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">R</span>
+                        <span class="tech-tag">Shiny</span>
+                        <span class="tech-tag">Plotly</span>
+                        <span class="tech-tag">GSoC 2022</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Experience</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Xintelli</h3>
+                    <p style="color: var(--primary); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 0.5rem;">AI and Web Developer • Jan 2023 - Feb 2026</p>
+                    <p>Built and optimized 15+ Django APIs, cutting response time by 30% for 10K+ users. Improved AI model accuracy by 5% and integrated AI workflows boosting automation efficiency by 20% across 3 client platforms.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Google Summer of Code (NRNB)</h3>
+                    <p style="color: var(--primary); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 0.5rem;">Open Source Contributor • May 2022 - Sep 2022</p>
+                    <p>Developed UI and backend of GeneCloudOmics web application using R and Shiny for gene analysis. Cleared bugs related to internal report analysis and developed 3D visualizations, increasing API speed by 85%.</p>
+                </div>
+                <div class="project-card">
+                    <h3>HacktoberFest 2023</h3>
+                    <p style="color: var(--primary); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 0.5rem;">Open Source Contributor • Oct 2023 - Nov 2023</p>
+                    <p>Successfully completed the challenge with 4 merged pull requests. Contributed to an AI-based Finance LLM project, developing the model and backend using Python, and containerized the entire solution.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>About</h2>
+            <div class="about-content">
+                <p>I'm an AI and Web Developer with expertise in building data pipelines, executive dashboards, and actionable insights using AWS, Python, and machine learning. With solid experience in modern AI technologies like MCP, fine-tuning, and n8n automation, I create intelligent solutions that bridge the gap between data and decision-making.</p>
+                <p>My journey includes contributing to Google Summer of Code with NRNB, winning Smart India Hackathon 2022, and building production-grade applications that serve thousands of users. I'm passionate about open source, having contributed to multiple projects including AI-based finance LLMs and gene analysis platforms.</p>
+                <p>With a foundation in Data Science from IIT Madras and a B.Tech in Computer Science, I combine theoretical knowledge with practical implementation to solve real-world problems.</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Django APIs Built</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">85%</span>
+                    <span class="stat-label">API Speed Improvement</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Users Served</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">GSoC</span>
+                    <span class="stat-label">Google Summer of Code</span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            &copy; 2026 Kundey Vishwanath. Powered by Graph Algorithms.
+        </footer>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('graph-canvas');
+        const ctx = canvas.getContext('2d');
+        const dpCanvas = document.getElementById('dp-canvas');
+        const dpCtx = dpCanvas.getContext('2d');
+        
+        let width = canvas.width = dpCanvas.width = window.innerWidth;
+        let height = canvas.height = dpCanvas.height = window.innerHeight;
+        
+        window.addEventListener('resize', () => {
+            width = canvas.width = dpCanvas.width = window.innerWidth;
+            height = canvas.height = dpCanvas.height = window.innerHeight;
+            initGraph();
+        });
+
+        class Node {
+            constructor(x, y, id) {
+                this.x = x;
+                this.y = y;
+                this.id = id;
+                this.neighbors = [];
+                this.visited = false;
+                this.distance = Infinity;
+                this.path = false;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+            }
+
+            draw(highlight = false) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 8, 0, Math.PI * 2);
+                
+                if (this.path) {
+                    ctx.fillStyle = '#ff0066';
+                    ctx.shadowBlur = 20;
+                    ctx.shadowColor = '#ff0066';
+                } else if (this.visited) {
+                    ctx.fillStyle = '#00ff88';
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = '#00ff88';
+                } else {
+                    ctx.fillStyle = '#00d4ff';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#00d4ff';
+                }
+                
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 50 || this.x > width - 50) this.vx *= -1;
+                if (this.y < 50 || this.y > height - 50) this.vy *= -1;
+
+                this.x = Math.max(50, Math.min(width - 50, this.x));
+                this.y = Math.max(50, Math.min(height - 50, this.y));
+            }
+        }
+
+        let nodes = [];
+        let edges = [];
+        let edgeWeights = new Map();
+        let currentAlgorithm = 'bfs';
+        let animationFrame = 0;
+        let visitQueue = [];
+        let isAnimating = false;
+        let animationId = null;
+        let isDPMode = false;
+
+        function initGraph() {
+            nodes = [];
+            edges = [];
+            edgeWeights.clear();
+            const nodeCount = Math.min(30, Math.floor((width * height) / 30000));
+            
+            for (let i = 0; i < nodeCount; i++) {
+                const x = Math.random() * (width - 100) + 50;
+                const y = Math.random() * (height - 100) + 50;
+                nodes.push(new Node(x, y, i));
+            }
+
+            for (let i = 0; i < nodes.length; i++) {
+                const connectCount = Math.floor(Math.random() * 3) + 2;
+                for (let j = 0; j < connectCount; j++) {
+                    const target = Math.floor(Math.random() * nodes.length);
+                    if (target !== i && !nodes[i].neighbors.includes(target)) {
+                        nodes[i].neighbors.push(target);
+                        nodes[target].neighbors.push(i);
+                        edges.push([i, target]);
+                        edgeWeights.set(`${i}-${target}`, Math.floor(Math.random() * 10) + 1);
+                        edgeWeights.set(`${target}-${i}`, Math.floor(Math.random() * 10) + 1);
+                    }
+                }
+            }
+
+            document.getElementById('node-count').textContent = nodes.length;
+            resetAlgorithm();
+        }
+
+        function resetAlgorithm() {
+            nodes.forEach(node => {
+                node.visited = false;
+                node.distance = Infinity;
+                node.path = false;
+            });
+            visitQueue = [];
+            isAnimating = false;
+        }
+
+        function drawEdges() {
+            edges.forEach(([from, to]) => {
+                const nodeFrom = nodes[from];
+                const nodeTo = nodes[to];
+                
+                ctx.beginPath();
+                ctx.moveTo(nodeFrom.x, nodeFrom.y);
+                ctx.lineTo(nodeTo.x, nodeTo.y);
+                
+                if (nodeFrom.visited && nodeTo.visited) {
+                    ctx.strokeStyle = 'rgba(0, 255, 136, 0.3)';
+                    ctx.lineWidth = 2;
+                } else {
+                    ctx.strokeStyle = 'rgba(0, 212, 255, 0.15)';
+                    ctx.lineWidth = 1;
+                }
+                
+                ctx.stroke();
+            });
+        }
+
+        async function runBFS() {
+            if (isAnimating) return;
+            isAnimating = true;
+            resetAlgorithm();
+            document.getElementById('algo-detail').textContent = 'Level-order traversal';
+            
+            const queue = [0];
+            nodes[0].visited = true;
+            
+            while (queue.length > 0) {
+                const current = queue.shift();
+                nodes[current].path = true;
+                
+                await sleep(100);
+                
+                for (const neighbor of nodes[current].neighbors) {
+                    if (!nodes[neighbor].visited) {
+                        nodes[neighbor].visited = true;
+                        queue.push(neighbor);
+                    }
+                }
+                
+                await sleep(50);
+                nodes[current].path = false;
+            }
+            
+            isAnimating = false;
+        }
+
+        async function runDFS() {
+            if (isAnimating) return;
+            isAnimating = true;
+            resetAlgorithm();
+            document.getElementById('algo-detail').textContent = 'Depth-first exploration';
+            
+            const stack = [0];
+            
+            while (stack.length > 0) {
+                const current = stack.pop();
+                
+                if (!nodes[current].visited) {
+                    nodes[current].visited = true;
+                    nodes[current].path = true;
+                    
+                    await sleep(100);
+                    
+                    for (const neighbor of nodes[current].neighbors) {
+                        if (!nodes[neighbor].visited) {
+                            stack.push(neighbor);
+                        }
+                    }
+                    
+                    await sleep(50);
+                    nodes[current].path = false;
+                }
+            }
+            
+            isAnimating = false;
+        }
+
+        async function runDijkstra() {
+            if (isAnimating) return;
+            isAnimating = true;
+            resetAlgorithm();
+            document.getElementById('algo-detail').textContent = 'Shortest path from source';
+            
+            nodes[0].distance = 0;
+            const unvisited = new Set(nodes.map((_, i) => i));
+            
+            while (unvisited.size > 0) {
+                let current = -1;
+                let minDist = Infinity;
+                
+                for (const id of unvisited) {
+                    if (nodes[id].distance < minDist) {
+                        minDist = nodes[id].distance;
+                        current = id;
+                    }
+                }
+                
+                if (current === -1 || minDist === Infinity) break;
+                
+                unvisited.delete(current);
+                nodes[current].visited = true;
+                nodes[current].path = true;
+                
+                await sleep(100);
+                
+                for (const neighbor of nodes[current].neighbors) {
+                    if (unvisited.has(neighbor)) {
+                        const edgeKey = `${current}-${neighbor}`;
+                        const weight = edgeWeights.get(edgeKey) || 1;
+                        const alt = nodes[current].distance + weight;
+                        if (alt < nodes[neighbor].distance) {
+                            nodes[neighbor].distance = alt;
+                        }
+                    }
+                }
+                
+                await sleep(50);
+                nodes[current].path = false;
+            }
+            
+            isAnimating = false;
+        }
+
+        async function runBellmanFord() {
+            if (isAnimating) return;
+            isAnimating = true;
+            resetAlgorithm();
+            document.getElementById('algo-detail').textContent = 'Handles negative weights';
+            
+            nodes[0].distance = 0;
+            
+            for (let i = 0; i < nodes.length - 1; i++) {
+                for (const [from, to] of edges) {
+                    const edgeKey = `${from}-${to}`;
+                    const weight = edgeWeights.get(edgeKey) || 1;
+                    
+                    nodes[from].path = true;
+                    nodes[to].path = true;
+                    await sleep(50);
+                    
+                    if (nodes[from].distance + weight < nodes[to].distance) {
+                        nodes[to].distance = nodes[from].distance + weight;
+                        nodes[to].visited = true;
+                    }
+                    
+                    nodes[from].path = false;
+                    nodes[to].path = false;
+                }
+            }
+            
+            isAnimating = false;
+        }
+
+        async function runFloydWarshall() {
+            if (isAnimating) return;
+            isAnimating = true;
+            resetAlgorithm();
+            document.getElementById('algo-detail').textContent = 'All-pairs shortest paths';
+            
+            for (let k = 0; k < nodes.length; k++) {
+                nodes[k].path = true;
+                await sleep(200);
+                
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = 0; j < nodes.length; j++) {
+                        if (i !== j) {
+                            nodes[i].visited = true;
+                            nodes[j].visited = true;
+                        }
+                    }
+                }
+                await sleep(100);
+                nodes[k].path = false;
+            }
+            
+            isAnimating = false;
+        }
+
+        async function runHierholzer() {
+            if (isAnimating) return;
+            isAnimating = true;
+            resetAlgorithm();
+            document.getElementById('algo-detail').textContent = 'Eulerian path finding';
+            
+            let current = 0;
+            const path = [];
+            const tempEdges = [...edges];
+            
+            while (tempEdges.length > 0 || current !== 0) {
+                nodes[current].path = true;
+                await sleep(150);
+                
+                const neighborEdges = tempEdges.filter(([from, to]) => from === current || to === current);
+                
+                if (neighborEdges.length > 0) {
+                    const [from, to] = neighborEdges[0];
+                    const next = from === current ? to : from;
+                    
+                    nodes[next].visited = true;
+                    tempEdges.splice(tempEdges.indexOf(neighborEdges[0]), 1);
+                    
+                    await sleep(100);
+                    nodes[current].path = false;
+                    current = next;
+                } else {
+                    path.push(current);
+                    nodes[current].path = false;
+                    if (path.length > 1) {
+                        current = path[path.length - 2];
+                    } else break;
+                }
+            }
+            
+            isAnimating = false;
+        }
+
+        // DP Visualizations
+        async function visualizeRodCutting() {
+            isDPMode = true;
+            canvas.style.display = 'none';
+            dpCanvas.style.display = 'block';
+            document.getElementById('algo-detail').textContent = 'Maximize profit by cutting rod';
+            
+            const n = 8;
+            const prices = [0, 1, 5, 8, 9, 10, 17, 17, 20];
+            const dp = new Array(n + 1).fill(0);
+            
+            const cellWidth = Math.min(80, width / 12);
+            const cellHeight = 60;
+            const startX = width / 2 - (n * cellWidth) / 2;
+            const startY = height / 2 - 100;
+            
+            for (let i = 1; i <= n; i++) {
+                for (let j = 1; j <= i; j++) {
+                    dpCtx.fillStyle = 'rgba(5, 8, 20, 0.3)';
+                    dpCtx.fillRect(0, 0, width, height);
+                    
+                    // Draw DP table
+                    for (let k = 0; k <= n; k++) {
+                        const x = startX + k * cellWidth;
+                        const y = startY;
+                        
+                        if (k === i) {
+                            dpCtx.strokeStyle = '#ff0066';
+                            dpCtx.lineWidth = 3;
+                        } else if (k < i) {
+                            dpCtx.strokeStyle = '#00ff88';
+                            dpCtx.lineWidth = 2;
+                        } else {
+                            dpCtx.strokeStyle = 'rgba(0, 212, 255, 0.3)';
+                            dpCtx.lineWidth = 1;
+                        }
+                        
+                        dpCtx.strokeRect(x, y, cellWidth, cellHeight);
+                        
+                        dpCtx.fillStyle = '#e8f4f8';
+                        dpCtx.font = '14px JetBrains Mono';
+                        dpCtx.textAlign = 'center';
+                        dpCtx.fillText(k, x + cellWidth/2, y - 10);
+                        dpCtx.fillText(dp[k], x + cellWidth/2, y + cellHeight/2 + 5);
+                    }
+                    
+                    // Update value
+                    if (dp[i - j] + prices[j] > dp[i]) {
+                        dp[i] = dp[i - j] + prices[j];
+                    }
+                    
+                    await sleep(200);
+                }
+            }
+            
+            // Show final result
+            dpCtx.fillStyle = '#00ff88';
+            dpCtx.font = 'bold 24px JetBrains Mono';
+            dpCtx.textAlign = 'center';
+            dpCtx.fillText(`Max Profit: ${dp[n]}`, width/2, startY + 150);
+        }
+
+        async function visualizeBalloonBurst() {
+            isDPMode = true;
+            canvas.style.display = 'none';
+            dpCanvas.style.display = 'block';
+            document.getElementById('algo-detail').textContent = 'Maximize coins from bursting';
+            
+            const balloons = [3, 1, 5, 8];
+            const n = balloons.length;
+            
+            for (let len = 1; len <= n; len++) {
+                for (let left = 0; left <= n - len; left++) {
+                    const right = left + len - 1;
+                    
+                    dpCtx.fillStyle = 'rgba(5, 8, 20, 0.3)';
+                    dpCtx.fillRect(0, 0, width, height);
+                    
+                    // Draw balloons
+                    for (let i = 0; i < n; i++) {
+                        const x = width/2 - (n * 80)/2 + i * 80 + 40;
+                        const y = height/2;
+                        
+                        if (i >= left && i <= right) {
+                            dpCtx.fillStyle = '#ff0066';
+                            dpCtx.shadowBlur = 20;
+                            dpCtx.shadowColor = '#ff0066';
+                        } else {
+                            dpCtx.fillStyle = '#00d4ff';
+                            dpCtx.shadowBlur = 10;
+                            dpCtx.shadowColor = '#00d4ff';
+                        }
+                        
+                        dpCtx.beginPath();
+                        dpCtx.arc(x, y, 30, 0, Math.PI * 2);
+                        dpCtx.fill();
+                        dpCtx.shadowBlur = 0;
+                        
+                        dpCtx.fillStyle = '#0a0e27';
+                        dpCtx.font = 'bold 20px JetBrains Mono';
+                        dpCtx.textAlign = 'center';
+                        dpCtx.fillText(balloons[i], x, y + 7);
+                    }
+                    
+                    await sleep(300);
+                }
+            }
+        }
+
+        async function visualizeLCS() {
+            isDPMode = true;
+            canvas.style.display = 'none';
+            dpCanvas.style.display = 'block';
+            document.getElementById('algo-detail').textContent = 'Longest Common Subsequence';
+            
+            const str1 = "AGGTAB";
+            const str2 = "GXTXAYB";
+            const m = str1.length;
+            const n = str2.length;
+            const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));
+            
+            const cellSize = Math.min(60, Math.min(width / (n + 3), height / (m + 3)));
+            const startX = width / 2 - ((n + 1) * cellSize) / 2;
+            const startY = height / 2 - ((m + 1) * cellSize) / 2;
+            
+            for (let i = 1; i <= m; i++) {
+                for (let j = 1; j <= n; j++) {
+                    dpCtx.fillStyle = 'rgba(5, 8, 20, 0.3)';
+                    dpCtx.fillRect(0, 0, width, height);
+                    
+                    // Draw table
+                    for (let x = 0; x <= m; x++) {
+                        for (let y = 0; y <= n; y++) {
+                            const cellX = startX + y * cellSize;
+                            const cellY = startY + x * cellSize;
+                            
+                            if (x === i && y === j) {
+                                dpCtx.fillStyle = 'rgba(255, 0, 102, 0.3)';
+                                dpCtx.fillRect(cellX, cellY, cellSize, cellSize);
+                            }
+                            
+                            dpCtx.strokeStyle = x < i || y < j ? '#00ff88' : 'rgba(0, 212, 255, 0.3)';
+                            dpCtx.lineWidth = x === i && y === j ? 3 : 1;
+                            dpCtx.strokeRect(cellX, cellY, cellSize, cellSize);
+                            
+                            if (x > 0 && y > 0) {
+                                dpCtx.fillStyle = '#e8f4f8';
+                                dpCtx.font = '16px JetBrains Mono';
+                                dpCtx.textAlign = 'center';
+                                dpCtx.fillText(dp[x][y], cellX + cellSize/2, cellY + cellSize/2 + 5);
+                            }
+                        }
+                    }
+                    
+                    // Draw strings
+                    dpCtx.fillStyle = '#00ff88';
+                    dpCtx.font = 'bold 18px JetBrains Mono';
+                    for (let k = 0; k < n; k++) {
+                        dpCtx.fillText(str2[k], startX + (k + 1) * cellSize + cellSize/2, startY - 10);
+                    }
+                    for (let k = 0; k < m; k++) {
+                        dpCtx.fillText(str1[k], startX - 20, startY + (k + 1) * cellSize + cellSize/2 + 5);
+                    }
+                    
+                    if (str1[i - 1] === str2[j - 1]) {
+                        dp[i][j] = dp[i - 1][j - 1] + 1;
+                    } else {
+                        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                    }
+                    
+                    await sleep(150);
+                }
+            }
+            
+            dpCtx.fillStyle = '#00ff88';
+            dpCtx.font = 'bold 24px JetBrains Mono';
+            dpCtx.fillText(`LCS Length: ${dp[m][n]}`, width/2, startY + (m + 1) * cellSize + 40);
+        }
+
+        async function visualizeLIS() {
+            isDPMode = true;
+            canvas.style.display = 'none';
+            dpCanvas.style.display = 'block';
+            document.getElementById('algo-detail').textContent = 'Longest Increasing Subsequence';
+            
+            const arr = [10, 9, 2, 5, 3, 7, 101, 18];
+            const n = arr.length;
+            const dp = new Array(n).fill(1);
+            
+            const barWidth = Math.min(80, width / (n + 2));
+            const startX = width / 2 - (n * barWidth) / 2;
+            const maxHeight = 300;
+            
+            for (let i = 1; i < n; i++) {
+                for (let j = 0; j < i; j++) {
+                    dpCtx.fillStyle = 'rgba(5, 8, 20, 0.3)';
+                    dpCtx.fillRect(0, 0, width, height);
+                    
+                    // Draw array
+                    for (let k = 0; k < n; k++) {
+                        const x = startX + k * barWidth;
+                        const barH = (arr[k] / Math.max(...arr)) * maxHeight;
+                        const y = height / 2 + 50 - barH;
+                        
+                        if (k === i) {
+                            dpCtx.fillStyle = '#ff0066';
+                        } else if (k === j) {
+                            dpCtx.fillStyle = '#00ff88';
+                        } else if (k < i) {
+                            dpCtx.fillStyle = 'rgba(0, 212, 255, 0.5)';
+                        } else {
+                            dpCtx.fillStyle = 'rgba(0, 212, 255, 0.2)';
+                        }
+                        
+                        dpCtx.fillRect(x + 5, y, barWidth - 10, barH);
+                        
+                        dpCtx.fillStyle = '#e8f4f8';
+                        dpCtx.font = '14px JetBrains Mono';
+                        dpCtx.textAlign = 'center';
+                        dpCtx.fillText(arr[k], x + barWidth/2, y - 10);
+                        dpCtx.fillText(`DP:${dp[k]}`, x + barWidth/2, height/2 + 80);
+                    }
+                    
+                    if (arr[j] < arr[i]) {
+                        dp[i] = Math.max(dp[i], dp[j] + 1);
+                    }
+                    
+                    await sleep(200);
+                }
+            }
+            
+            dpCtx.fillStyle = '#00ff88';
+            dpCtx.font = 'bold 24px JetBrains Mono';
+            dpCtx.fillText(`LIS Length: ${Math.max(...dp)}`, width/2, height/2 + 150);
+        }
+
+        async function visualizeKnapsack() {
+            isDPMode = true;
+            canvas.style.display = 'none';
+            dpCanvas.style.display = 'block';
+            document.getElementById('algo-detail').textContent = '0/1 Knapsack Problem';
+            
+            const weights = [2, 3, 4, 5];
+            const values = [3, 4, 5, 6];
+            const capacity = 8;
+            const n = weights.length;
+            const dp = Array(n + 1).fill(null).map(() => Array(capacity + 1).fill(0));
+            
+            const cellSize = Math.min(50, Math.min(width / (capacity + 3), height / (n + 3)));
+            const startX = width / 2 - ((capacity + 1) * cellSize) / 2;
+            const startY = height / 2 - ((n + 1) * cellSize) / 2;
+            
+            for (let i = 1; i <= n; i++) {
+                for (let w = 1; w <= capacity; w++) {
+                    dpCtx.fillStyle = 'rgba(5, 8, 20, 0.3)';
+                    dpCtx.fillRect(0, 0, width, height);
+                    
+                    // Draw DP table
+                    for (let x = 0; x <= n; x++) {
+                        for (let y = 0; y <= capacity; y++) {
+                            const cellX = startX + y * cellSize;
+                            const cellY = startY + x * cellSize;
+                            
+                            if (x === i && y === w) {
+                                dpCtx.fillStyle = 'rgba(255, 0, 102, 0.3)';
+                                dpCtx.fillRect(cellX, cellY, cellSize, cellSize);
+                            }
+                            
+                            dpCtx.strokeStyle = x < i || y < w ? '#00ff88' : 'rgba(0, 212, 255, 0.3)';
+                            dpCtx.lineWidth = x === i && y === w ? 3 : 1;
+                            dpCtx.strokeRect(cellX, cellY, cellSize, cellSize);
+                            
+                            dpCtx.fillStyle = '#e8f4f8';
+                            dpCtx.font = '12px JetBrains Mono';
+                            dpCtx.textAlign = 'center';
+                            dpCtx.fillText(dp[x][y], cellX + cellSize/2, cellY + cellSize/2 + 4);
+                        }
+                    }
+                    
+                    // Labels
+                    dpCtx.fillStyle = '#00ff88';
+                    dpCtx.font = 'bold 14px JetBrains Mono';
+                    for (let k = 0; k <= capacity; k++) {
+                        dpCtx.fillText(k, startX + k * cellSize + cellSize/2, startY - 10);
+                    }
+                    for (let k = 1; k <= n; k++) {
+                        dpCtx.fillText(`W:${weights[k-1]} V:${values[k-1]}`, startX - 70, startY + k * cellSize + cellSize/2 + 4);
+                    }
+                    
+                    if (weights[i - 1] <= w) {
+                        dp[i][w] = Math.max(values[i - 1] + dp[i - 1][w - weights[i - 1]], dp[i - 1][w]);
+                    } else {
+                        dp[i][w] = dp[i - 1][w];
+                    }
+                    
+                    await sleep(150);
+                }
+            }
+            
+            dpCtx.fillStyle = '#00ff88';
+            dpCtx.font = 'bold 24px JetBrains Mono';
+            dpCtx.fillText(`Max Value: ${dp[n][capacity]}`, width/2, startY + (n + 1) * cellSize + 40);
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function switchAlgorithm(algo) {
+            if (isAnimating) return;
+            
+            currentAlgorithm = algo;
+            document.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            const btn = document.getElementById(`${algo}-btn`);
+            if (btn) btn.classList.add('active');
+            document.getElementById('current-algo').textContent = algo.toUpperCase();
+            
+            resetAlgorithm();
+            
+            // Graph algorithms
+            if (algo === 'bfs') {
+                isDPMode = false;
+                canvas.style.display = 'block';
+                dpCanvas.style.display = 'none';
+                runBFS();
+            } else if (algo === 'dfs') {
+                isDPMode = false;
+                canvas.style.display = 'block';
+                dpCanvas.style.display = 'none';
+                runDFS();
+            } else if (algo === 'dijkstra') {
+                isDPMode = false;
+                canvas.style.display = 'block';
+                dpCanvas.style.display = 'none';
+                runDijkstra();
+            } else if (algo === 'bellmanford') {
+                isDPMode = false;
+                canvas.style.display = 'block';
+                dpCanvas.style.display = 'none';
+                runBellmanFord();
+            } else if (algo === 'floydwarshall') {
+                isDPMode = false;
+                canvas.style.display = 'block';
+                dpCanvas.style.display = 'none';
+                runFloydWarshall();
+            } else if (algo === 'hierholzer') {
+                isDPMode = false;
+                canvas.style.display = 'block';
+                dpCanvas.style.display = 'none';
+                runHierholzer();
+            }
+            // DP algorithms
+            else if (algo === 'rodcutting') {
+                visualizeRodCutting();
+            } else if (algo === 'balloonburst') {
+                visualizeBalloonBurst();
+            } else if (algo === 'lcs') {
+                visualizeLCS();
+            } else if (algo === 'lis') {
+                visualizeLIS();
+            } else if (algo === 'knapsack') {
+                visualizeKnapsack();
+            }
+        }
+
+        function resetGraph() {
+            isDPMode = false;
+            canvas.style.display = 'block';
+            dpCanvas.style.display = 'none';
+            document.getElementById('algo-detail').textContent = '';
+            initGraph();
+        }
+
+        function animate() {
+            if (!isDPMode) {
+                ctx.fillStyle = 'rgba(5, 8, 20, 0.3)';
+                ctx.fillRect(0, 0, width, height);
+                
+                nodes.forEach(node => node.update());
+                drawEdges();
+                nodes.forEach(node => node.draw());
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
+        initGraph();
+        animate();
+        runBFS();
+    </script>
+</body>
 </html>
